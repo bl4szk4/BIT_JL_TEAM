@@ -10,9 +10,9 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
-from pathlib import Path
 import datetime
 import os
+from pathlib import Path
 
 import environ
 from corsheaders.defaults import default_headers
@@ -50,12 +50,12 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "django.contrib.postgres",
-    "django.contrib.gis",
     "rest_framework",
     "django_filters",
     "drf_yasg",
     "debug_toolbar",
     "corsheaders",
+    'django.contrib.gis',
     "rest_framework.authtoken",
     "rest_framework_simplejwt",
     "rest_framework_simplejwt.token_blacklist",
@@ -67,6 +67,8 @@ INSTALLED_APPS = [
     "django_jsonform",
     "simple_history",
     "bit_app.apps.user",
+    "bit_app.apps.user_profile",
+    "bit_app.apps.common",
 ]
 
 MIDDLEWARE = [
@@ -82,25 +84,46 @@ MIDDLEWARE = [
     "bit_app.settings.middlewares.DeprecatedJWTTokenMiddleware",
 ]
 
-ROOT_URLCONF = 'bit_app.urls'
+REST_FRAMEWORK = {
+    "DEFAULT_PERMISSION_CLASSES": ["rest_framework.permissions.IsAuthenticated"],
+    "DEFAULT_AUTHENTICATION_CLASSES": [
+        "dj_rest_auth.jwt_auth.JWTCookieAuthentication",
+    ],
+    "DEFAULT_RENDERER_CLASSES": [
+        "djangorestframework_camel_case.render.CamelCaseJSONRenderer",
+        "rest_framework.renderers.BrowsableAPIRenderer",
+    ],
+    "DEFAULT_PARSER_CLASSES": [
+        "djangorestframework_camel_case.parser.CamelCaseJSONParser",
+        "djangorestframework_camel_case.parser.CamelCaseMultiPartParser",
+        "rest_framework.parsers.MultiPartParser",
+        "rest_framework.parsers.FormParser",
+    ],
+    "TEST_REQUEST_DEFAULT_FORMAT": "json",
+    "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.LimitOffsetPagination",
+    "PAGE_SIZE": 10,
+    "DEFAULT_FILTER_BACKENDS": ("django_filters.rest_framework.DjangoFilterBackend",),
+}
+
+ROOT_URLCONF = "bit_app.urls"
 
 TEMPLATES = [
     {
-        'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
-        'APP_DIRS': True,
-        'OPTIONS': {
-            'context_processors': [
-                'django.template.context_processors.debug',
-                'django.template.context_processors.request',
-                'django.contrib.auth.context_processors.auth',
-                'django.contrib.messages.context_processors.messages',
+        "BACKEND": "django.template.backends.django.DjangoTemplates",
+        "DIRS": [],
+        "APP_DIRS": True,
+        "OPTIONS": {
+            "context_processors": [
+                "django.template.context_processors.debug",
+                "django.template.context_processors.request",
+                "django.contrib.auth.context_processors.auth",
+                "django.contrib.messages.context_processors.messages",
             ],
         },
     },
 ]
 
-WSGI_APPLICATION = 'bit_app.wsgi.application'
+WSGI_APPLICATION = "bit_app.wsgi.application"
 
 
 # Database
@@ -108,7 +131,7 @@ WSGI_APPLICATION = 'bit_app.wsgi.application'
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.postgresql",
+        "ENGINE": "django.contrib.gis.db.backends.postgis",
         "NAME": env("DJANGO_DB_NAME"),
         "USER": env("DJANGO_DB_USER"),
         "PASSWORD": env("DJANGO_DB_PASSWORD"),
@@ -117,6 +140,7 @@ DATABASES = {
     }
 }
 
+DOMAIN = env("DJANGO_DOMAIN")
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
@@ -140,9 +164,9 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = "en-us"
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = "UTC"
 
 USE_I18N = True
 
@@ -159,12 +183,12 @@ CSRF_TRUSTED_ORIGINS = [
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = "static/"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": datetime.timedelta(hours=1),
@@ -188,8 +212,8 @@ REST_AUTH = {
 
 AUTH_USER_MODEL = "user.CustomUser"
 
+
 class AzureOpenAI:
     ENDPOINT = os.environ.get("AZURE_OPENAI_ENDPOINT")
     KEY = os.environ.get("AZURE_OPENAI_KEY")
     API_VERSION = "2024-05-01-preview"
-
