@@ -57,7 +57,6 @@ class ProfileViewSet(viewsets.GenericViewSet):
         service.generate_person_summary()
         service.generate_embedding()
         character = service.generate_person_character()
-
+        print(character)
         serializer = ProfileCharacterSerializer(character)
-
         return Response(status=status.HTTP_200_OK, data=serializer.data)

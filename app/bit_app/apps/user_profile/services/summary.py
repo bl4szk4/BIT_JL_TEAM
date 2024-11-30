@@ -38,7 +38,7 @@ class UserSummaryService:
         self.profile.character = result
         self.profile.save(update_fields=['character'])
 
-        return result
+        return {"character": result}
 
     def generate_embedding(self):
         embedded_value = generate_embedded_data(self.profile.summary)
