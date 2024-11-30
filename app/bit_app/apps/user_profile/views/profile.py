@@ -1,6 +1,6 @@
 from rest_framework import status, viewsets
 from rest_framework.decorators import action
-from rest_framework.permissions import AllowAny
+from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.request import Request
 from rest_framework.response import Response
 from drf_yasg.utils import swagger_auto_schema
@@ -11,7 +11,7 @@ from bit_app.apps.user_profile.services import QuizService, UserSummaryService
 
 
 class ProfileViewSet(viewsets.GenericViewSet):
-    permission_classes = (AllowAny,)
+    permission_classes = (IsAuthenticated,)
     def get_serializer_class(self):
         if self.action == "upload_quiz":
             return QuizSerializer
