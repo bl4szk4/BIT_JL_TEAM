@@ -223,6 +223,7 @@ class AzureOpenAI:
 class AzureEmbedding:
     ENDPOINT = os.environ.get("AZURE_EMBEDDING_ENDPOINT")
     KEY = os.environ.get("AZURE_EMBEDDING_KEY")
+    API_VERSION = "2024-02-01"
 
 CELERY_BROKER_URL = os.environ.get("CELERY_BROKER", "redis://127.0.0.1:6379/0")
 CELERY_RESULT_BACKEND = os.environ.get("CELERY_BACKEND", "redis://127.0.0.1:6379/0")
