@@ -10,7 +10,6 @@ FIXTURES = fixtures/users.json
 build:
 	if [ ! -f ./app/config/.env ]; then cp ./app/config/.env.template ./app/config/.env; fi
 	docker-compose $(ENV_FILE) build
-	docker-compose $(ENV_FILE) run --rm $(BACKEND_CONTAINER) python manage.py collectstatic
 
 up:
 	docker-compose $(ENV_FILE) up
@@ -25,7 +24,6 @@ up-build:
 	docker-compose $(ENV_FILE) run --rm $(BACKEND_CONTAINER) python manage.py makemigrations
 	docker-compose $(ENV_FILE) run --rm $(BACKEND_CONTAINER) python manage.py migrate
 	docker-compose $(ENV_FILE) run --rm $(BACKEND_CONTAINER) python manage.py compilemessages
-	docker-compose $(ENV_FILE) run --rm $(BACKEND_CONTAINER) python manage.py collectstatic
 	docker-compose $(ENV_FILE) up
 
 showmigrations:
