@@ -22,11 +22,21 @@ SCHEMA = {
     "required": ["summary"]
 }
 
-def prompt_preparing_function():
-    pass
+
+def prompt_preparing_function(hobby_data: dict):
+    hobby_data.pop("id", None)
+    name = hobby_data.pop("name", None)
+
+    data = []
+    for key, value in hobby_data.items():
+        data.append(f"{key}: {value}")
+    data = "\n".join(data)
+    return f"Hobby: {name}\n information: {data}"
+
 
 HOBBY_SUMMARY = PromptOpenAI(
     system_prompt=SYSTEM_PROMPT,
     user_prompt=USER_PROMPT,
     schema=SCHEMA,
+    prompt_preparing_function=prompt_preparing_function
 )

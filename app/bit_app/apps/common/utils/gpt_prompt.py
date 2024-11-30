@@ -12,7 +12,7 @@ def prompt_openai(
     temperature: float = 0,
     function_name: str = "gpt_prompt",
     context: str = "",
-) -> tuple:
+) -> dict:
     completion = openai_client.chat.completions.create(
         model=engine_name,
         messages=[
@@ -40,7 +40,6 @@ def prompt_openai(
             "function": {"name": function_name},
         },
     )
-
 
     response = completion.choices[0].message.tool_calls[0].function.arguments
 
