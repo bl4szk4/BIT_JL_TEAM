@@ -1,4 +1,5 @@
 from langchain.embeddings import AzureOpenAIEmbeddings
+
 from bit_app.apps.common.consts import AZURE_EMBEDDINGS_DEPLOYMENT_NAME
 from bit_app.settings import AzureEmbedding
 

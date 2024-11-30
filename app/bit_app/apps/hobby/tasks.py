@@ -1,6 +1,7 @@
 from celery import shared_task
-from bit_app.apps.hobby.services import HobbySummaryService
+
 from bit_app.apps.hobby.models import Hobby
+from bit_app.apps.hobby.services import HobbySummaryService
 
 
 @shared_task(bind=True)

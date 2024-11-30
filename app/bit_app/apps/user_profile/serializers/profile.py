@@ -1,7 +1,7 @@
 from rest_framework import serializers
 
-from bit_app.apps.user_profile.models import UserProfile
 from bit_app.apps.common.models import Location
+from bit_app.apps.user_profile.models import UserProfile
 
 
 class TraitSerializer(serializers.Serializer):
@@ -23,6 +23,7 @@ class TraitSerializer(serializers.Serializer):
     value = serializers.IntegerField(
         help_text="The value of the trait on a defined scale",
     )
+
 
 class ProfileCharacterSerializer(serializers.Serializer):
     traits = serializers.ListSerializer(

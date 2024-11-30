@@ -56,13 +56,13 @@ INSTALLED_APPS = [
     "drf_yasg",
     "debug_toolbar",
     "corsheaders",
-    'django.contrib.gis',
+    "django.contrib.gis",
     "rest_framework.authtoken",
     "rest_framework_simplejwt",
     "rest_framework_simplejwt.token_blacklist",
     "dj_rest_auth",
     "phonenumber_field",
-    'pgvector.django',
+    "pgvector.django",
     "ckeditor",
     "nested_admin",
     "django_object_actions",
@@ -71,7 +71,7 @@ INSTALLED_APPS = [
     "bit_app.apps.user",
     "bit_app.apps.user_profile",
     "bit_app.apps.common",
-    "bit_app.apps.hobby"
+    "bit_app.apps.hobby",
 ]
 
 MIDDLEWARE = [
@@ -221,13 +221,16 @@ class AzureOpenAI:
     KEY = os.environ.get("AZURE_OPENAI_KEY")
     API_VERSION = "2024-05-01-preview"
 
+
 class AzureEmbedding:
     ENDPOINT = os.environ.get("AZURE_EMBEDDING_ENDPOINT")
     KEY = os.environ.get("AZURE_EMBEDDING_KEY")
     API_VERSION = "2024-02-01"
 
+
 CELERY_BROKER_URL = os.environ.get("CELERY_BROKER", "redis://127.0.0.1:6379/0")
 CELERY_RESULT_BACKEND = os.environ.get("CELERY_BACKEND", "redis://127.0.0.1:6379/0")
+
 
 class Redis:
     REDIS_PASSWORD = env("REDIS_PASSWORD")

@@ -6,9 +6,8 @@ class QuizService:
         self.profile = profile
 
     def create_quiz(self, quiz_data: dict):
-        questions_data = quiz_data.pop('questions')
+        questions_data = quiz_data.pop("questions")
         quiz = Quiz.objects.create(profile=self.profile, **quiz_data)
         questions = [Question(quiz=quiz, **question_data) for question_data in questions_data]
         Question.objects.bulk_create(questions)
         return quiz
-

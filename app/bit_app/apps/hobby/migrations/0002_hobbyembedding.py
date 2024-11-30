@@ -13,7 +13,7 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.RunSQL('CREATE EXTENSION IF NOT EXISTS vector'),
+        migrations.RunSQL("CREATE EXTENSION IF NOT EXISTS vector"),
         migrations.CreateModel(
             name="HobbyEmbedding",
             fields=[

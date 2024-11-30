@@ -1,8 +1,10 @@
-from pgvector.django import CosineDistance
 from django.db.models import Case, When
+from pgvector.django import CosineDistance
+
 from bit_app.apps.hobby.consts import SEMANTIC_SEARCH_THRESHOLD
 from bit_app.apps.hobby.models import Hobby, HobbyEmbedding
 from bit_app.apps.user_profile.models import UserProfile
+
 
 class HobbyMatchingService:
     def __init__(self, profile: UserProfile):

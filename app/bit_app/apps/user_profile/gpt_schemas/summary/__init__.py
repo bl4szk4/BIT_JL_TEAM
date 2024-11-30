@@ -1,6 +1,5 @@
 from bit_app.apps.common.classes import PromptOpenAI
 
-
 SYSTEM_PROMPT = """
 You are a person summarizer. For given list of questions with answers write a summary of that person, including all aspects.
 """
@@ -19,7 +18,7 @@ SCHEMA = {
             "summary": "Summary of the offer",
         }
     },
-    "required": ["summary"]
+    "required": ["summary"],
 }
 
 
@@ -36,5 +35,5 @@ USER_SUMMARY = PromptOpenAI(
     system_prompt=SYSTEM_PROMPT,
     user_prompt=USER_PROMPT,
     schema=SCHEMA,
-    prompt_preparing_function=prompt_preparing_function
+    prompt_preparing_function=prompt_preparing_function,
 )

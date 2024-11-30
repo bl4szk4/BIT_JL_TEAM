@@ -1,6 +1,5 @@
 from bit_app.apps.common.classes import PromptOpenAI
 
-
 SYSTEM_PROMPT = """
 You are a person categorizer. For given person summary create their categorization.
 """
@@ -31,7 +30,7 @@ SCHEMA = {
                             "Social Connectedness",
                             "Curiosity",
                             "Risk Tolerance",
-                            "Emotional Resonance"
+                            "Emotional Resonance",
                         ],
                         "description": "The name of the trait",
                     },
@@ -40,11 +39,11 @@ SCHEMA = {
                         "description": "The value of the trait on a defined scale",
                     },
                 },
-                "required": ["key", "value"]
+                "required": ["key", "value"],
             },
         },
     },
-    "required": ["traits"]
+    "required": ["traits"],
 }
 
 
@@ -61,5 +60,5 @@ USER_CHARACTER = PromptOpenAI(
     system_prompt=SYSTEM_PROMPT,
     user_prompt=USER_PROMPT,
     schema=SCHEMA,
-    prompt_changing_function=prompt_changing_function
+    prompt_changing_function=prompt_changing_function,
 )

@@ -1,4 +1,5 @@
 import openai
+
 from bit_app.settings import AzureOpenAI
 
 openai_client = openai.AzureOpenAI(

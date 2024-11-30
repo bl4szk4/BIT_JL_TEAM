@@ -2,7 +2,7 @@ from django.db import models
 
 
 class Hobby(models.Model):
-    name =  models.CharField(max_length=100)
+    name = models.CharField(max_length=100)
     physical_activity_level = models.PositiveIntegerField()
     creativity_level = models.PositiveIntegerField()
     complexity_level = models.PositiveIntegerField()
