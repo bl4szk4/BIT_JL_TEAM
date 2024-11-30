@@ -18,3 +18,6 @@ class UserProfile(models.Model):
 
     summary = models.TextField(blank=True, null=True)
     character = models.JSONField(blank=True, null=True, default=dict)
+
+    accepted_hobbies = models.JSONField(default=list, blank=True, null=True)
+    rejected_hobbies = models.JSONField(default=list, blank=True, null=True)

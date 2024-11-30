@@ -61,3 +61,7 @@ class ProfileViewSet(viewsets.GenericViewSet):
         serializer = ProfileCharacterSerializer(character)
 
         return Response(status=status.HTTP_200_OK, data=serializer.data)
+
+    @action(methods=["POST"], detail=False, url_path='update-hobbies-profiles')
+    def update_hobbies_profile(self, request: Request) -> Response:
+
