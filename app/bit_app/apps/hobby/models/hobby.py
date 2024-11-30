@@ -1,0 +1,31 @@
+from django.db import models
+
+
+class Hobby(models.Model):
+    name =  models.CharField(max_length=100)
+    physical_activity_level = models.PositiveIntegerField()
+    creativity_level = models.PositiveIntegerField()
+    complexity_level = models.PositiveIntegerField()
+    entry_start_level = models.PositiveIntegerField()
+    age_range = models.PositiveIntegerField()
+    time_commitment = models.PositiveIntegerField()
+    number_of_people = models.PositiveIntegerField()
+    remote_on_site = models.PositiveIntegerField()
+    competitiveness = models.PositiveIntegerField()
+    budget = models.PositiveIntegerField()
+    seasonality = models.PositiveIntegerField()
+    risk_of_injury = models.PositiveIntegerField()
+    acceptable_disability_level = models.PositiveIntegerField()
+    popularity = models.PositiveIntegerField()
+    phobias = models.PositiveIntegerField()
+    relaxation_level = models.PositiveIntegerField()
+    stress_level = models.PositiveIntegerField()
+    skill_development = models.PositiveIntegerField()
+    regularity = models.PositiveIntegerField()
+    flexibility = models.PositiveIntegerField()
+    earning_potential = models.PositiveIntegerField()
+    emotional_engagement = models.PositiveIntegerField()
+    mental_health_impact = models.PositiveIntegerField()
+    is_for_disability_person = models.BooleanField(default=False)
+    summary = models.TextField(blank=True, null=True)
+
