@@ -4,12 +4,12 @@ from bit_app.apps.hobby.consts import SEMANTIC_SEARCH_THRESHOLD
 from bit_app.apps.hobby.models import Hobby, HobbyEmbedding
 from bit_app.apps.user_profile.models import UserProfile
 
-class HobbyMatching:
+class HobbyMatchingService:
     def __init__(self, profile: UserProfile):
         self.profile = profile
 
     def get_best_matching_hobbies(self):
-        profile_embedding = self.profile.embedding
+        profile_embedding = self.profile.embeddings
         if not profile_embedding:
             return Hobby.objects.none()
 
