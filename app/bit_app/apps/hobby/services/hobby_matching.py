@@ -11,9 +11,13 @@ class HobbyMatchingService:
         self.profile = profile
 
     def get_best_matching_hobbies(self):
-        profile_embedding = self.profile.embeddings
-        if not profile_embedding:
+        # Pobierz profile embeddings
+        print(self.profile.id)
+        profile_embedding_instance = self.profile.embeddings.first()
+        if not profile_embedding_instance:
             return Hobby.objects.none()
+
+        profile_embedding = profile_embedding_instance.embedding
 
         hobby_embeddings = HobbyEmbedding.objects.select_related("hobby").all()
 

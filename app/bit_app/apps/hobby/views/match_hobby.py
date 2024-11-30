@@ -23,8 +23,7 @@ class HobbyMatchingViewSet(viewsets.GenericViewSet, mixins.RetrieveModelMixin):
     pagination_class = HobbyMatchingPagination
 
     def list(self, request: Request) -> Response:
-
-        profile = UserProfile.objects.select_related("embedding").get(user=self.request.user)
+        profile = UserProfile.objects.prefetch_related("embeddings").get(user=self.request.user)
 
         hobbies_matched = HobbyMatchingService(profile).get_best_matching_hobbies()
         page = self.paginate_queryset(hobbies_matched)
