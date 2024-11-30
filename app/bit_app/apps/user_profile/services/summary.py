@@ -7,7 +7,7 @@ from bit_app.apps.user_profile.gpt_schemas import USER_CHARACTER, USER_SUMMARY
 class UserSummaryService:
     def __init__(self, profile: UserProfile):
         self.profile = profile
-        self.quiz = Quiz.objects.filter(profile=profile).prefetch_related('question_set').first()
+        self.quiz = Quiz.objects.filter(profile=profile).prefetch_related('questions').first()
 
     def generate_person_summary(self):
         quiz_data = [
