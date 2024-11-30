@@ -28,6 +28,6 @@ EXPOSE 8000
 
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
-ENV DJANGO_SETTINGS_MODULE=bit_app.settings
+ENV DJANGO_SETTINGS_MODULE=bit_app.settings.base
 
 CMD ["while !</dev/tcp/db/5432 do sleep 1; done;"]
