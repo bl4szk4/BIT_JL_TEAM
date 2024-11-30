@@ -70,6 +70,7 @@ INSTALLED_APPS = [
     "bit_app.apps.user",
     "bit_app.apps.user_profile",
     "bit_app.apps.common",
+    "bit_app.apps.hobby"
 ]
 
 MIDDLEWARE = [

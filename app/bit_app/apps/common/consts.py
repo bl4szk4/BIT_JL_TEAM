@@ -1,0 +1,1 @@
+AZURE_OPENAI_ENGINE_NAME = "gpt-35-turbo-16k"

@@ -28,4 +28,3 @@ class Hobby(models.Model):
     mental_health_impact = models.PositiveIntegerField()
     is_for_disability_person = models.BooleanField(default=False)
     summary = models.TextField(blank=True, null=True)
-
