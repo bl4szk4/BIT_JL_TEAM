@@ -6,8 +6,8 @@ from rest_framework.response import Response
 from drf_yasg.utils import swagger_auto_schema
 
 from bit_app.apps.user_profile.models import UserProfile
-from bit_app.apps.user_profile.serializers import UserProfileSerializer, QuizSerializer
-from bit_app.apps.user_profile.services import QuizService
+from bit_app.apps.user_profile.serializers import UserProfileSerializer, QuizSerializer, ProfileCharacterSerializer
+from bit_app.apps.user_profile.services import QuizService, UserSummaryService
 
 
 class ProfileViewSet(viewsets.GenericViewSet):
@@ -44,7 +44,7 @@ class ProfileViewSet(viewsets.GenericViewSet):
         request_body=QuizSerializer,
         responses={status.HTTP_200_OK: ""},
     )
-    @action(methods=['POST'], detail=False)
+    @action(methods=['POST'], detail=False, url_path='upload-quiz')
     def upload_quiz(self, request: Request) -> Response:
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
@@ -53,4 +53,11 @@ class ProfileViewSet(viewsets.GenericViewSet):
         profile = self.get_object()
         QuizService(profile).create_quiz(quiz)
 
-        return Response(status=status.HTTP_200_OK)
+        service = UserSummaryService(profile)
+        service.generate_person_summary()
+        service.generate_embedding()
+        character = service.generate_person_character()
+
+        serializer = ProfileCharacterSerializer(character)
+
+        return Response(status=status.HTTP_200_OK, data=serializer.data)

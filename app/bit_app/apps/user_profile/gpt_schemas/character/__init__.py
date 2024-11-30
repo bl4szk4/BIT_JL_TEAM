@@ -48,7 +48,7 @@ SCHEMA = {
 }
 
 
-def result_changing_function(data: dict):
+def prompt_changing_function(data: dict):
     result = data.get("traits")
     data_out = {}
     for trait in result:
@@ -57,9 +57,9 @@ def result_changing_function(data: dict):
     return data_out
 
 
-HOBBY_SUMMARY = PromptOpenAI(
+USER_CHARACTER = PromptOpenAI(
     system_prompt=SYSTEM_PROMPT,
     user_prompt=USER_PROMPT,
     schema=SCHEMA,
-    prompt_preparing_function=prompt_preparing_function
+    prompt_changing_function=prompt_changing_function
 )
