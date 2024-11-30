@@ -5,31 +5,18 @@ from bit_app.apps.user_profile.models import UserProfile
 
 
 class TraitSerializer(serializers.Serializer):
-    key = serializers.ChoiceField(
-        choices=[
-            "Adventurousness",
-            "Conscientiousness",
-            "Extraversion",
-            "Neuroticism",
-            "Openness",
-            "Perseverance",
-            "Social Connectedness",
-            "Curiosity",
-            "Risk Tolerance",
-            "Emotional Resonance",
-        ],
-        help_text="The name of the trait",
-    )
-    value = serializers.IntegerField(
-        help_text="The value of the trait on a defined scale",
+    character = serializers.DictField(
+        child=serializers.IntegerField(),
+        help_text="A dictionary of traits with their integer values",
     )
 
 
 class ProfileCharacterSerializer(serializers.Serializer):
-    traits = serializers.ListSerializer(
-        child=TraitSerializer(),
-        help_text="List of traits with their integer values",
+    character = serializers.DictField(
+        child=serializers.IntegerField(),
+        help_text="A dictionary of traits with their integer values",
     )
+
 
 
 class UserProfileSerializer(serializers.ModelSerializer):

@@ -25,8 +25,8 @@ SCHEMA = {
 def prompt_preparing_function(quiz_data: list[dict]) -> str:
     data = []
     for item in quiz_data:
-        key, item = item.items()
-        data.append(f"Question: {key} - answer: {item}")
+        for key, value in item.items():
+            data.append(f"Question: {key} - answer: {value}")
 
     return "\n".join(data)
 
