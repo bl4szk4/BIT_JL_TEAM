@@ -10,9 +10,9 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
-from pathlib import Path
 import datetime
 import os
+from pathlib import Path
 
 import environ
 from corsheaders.defaults import default_headers
@@ -82,25 +82,25 @@ MIDDLEWARE = [
     "bit_app.settings.middlewares.DeprecatedJWTTokenMiddleware",
 ]
 
-ROOT_URLCONF = 'bit_app.urls'
+ROOT_URLCONF = "bit_app.urls"
 
 TEMPLATES = [
     {
-        'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
-        'APP_DIRS': True,
-        'OPTIONS': {
-            'context_processors': [
-                'django.template.context_processors.debug',
-                'django.template.context_processors.request',
-                'django.contrib.auth.context_processors.auth',
-                'django.contrib.messages.context_processors.messages',
+        "BACKEND": "django.template.backends.django.DjangoTemplates",
+        "DIRS": [],
+        "APP_DIRS": True,
+        "OPTIONS": {
+            "context_processors": [
+                "django.template.context_processors.debug",
+                "django.template.context_processors.request",
+                "django.contrib.auth.context_processors.auth",
+                "django.contrib.messages.context_processors.messages",
             ],
         },
     },
 ]
 
-WSGI_APPLICATION = 'bit_app.wsgi.application'
+WSGI_APPLICATION = "bit_app.wsgi.application"
 
 
 # Database
@@ -117,6 +117,7 @@ DATABASES = {
     }
 }
 
+DOMAIN = env("DJANGO_DOMAIN")
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
@@ -140,9 +141,9 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = "en-us"
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = "UTC"
 
 USE_I18N = True
 
@@ -159,12 +160,12 @@ CSRF_TRUSTED_ORIGINS = [
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = "static/"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": datetime.timedelta(hours=1),
@@ -188,8 +189,8 @@ REST_AUTH = {
 
 AUTH_USER_MODEL = "user.CustomUser"
 
+
 class AzureOpenAI:
     ENDPOINT = os.environ.get("AZURE_OPENAI_ENDPOINT")
     KEY = os.environ.get("AZURE_OPENAI_KEY")
     API_VERSION = "2024-05-01-preview"
-
