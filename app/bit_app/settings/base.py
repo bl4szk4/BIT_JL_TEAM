@@ -55,7 +55,7 @@ INSTALLED_APPS = [
     "drf_yasg",
     "debug_toolbar",
     "corsheaders",
-    'django.contrib.gis',
+    # 'django.contrib.gis',
     "rest_framework.authtoken",
     "rest_framework_simplejwt",
     "rest_framework_simplejwt.token_blacklist",

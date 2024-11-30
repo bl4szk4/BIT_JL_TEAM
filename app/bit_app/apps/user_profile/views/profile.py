@@ -21,5 +21,3 @@ class ProfileViewSet(viewsets.GenericViewSet):
         profile = self.get_queryset().first()
         self.check_object_permissions(self.request, profile)
         return profile
-
-
