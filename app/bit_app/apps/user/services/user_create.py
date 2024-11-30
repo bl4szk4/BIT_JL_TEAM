@@ -1,6 +1,8 @@
 from django.contrib.auth import get_user_model
 from rest_framework.serializers import ValidationError
 
+from bit_app.apps.user_profile.models import UserProfile
+
 User = get_user_model()
 
 
@@ -12,7 +14,11 @@ class UserCreateService:
         if User.objects.filter(email=self.email).exists():
             raise ValidationError("Email already registered.")
 
-        return User.objects.create_user(
+        user = User.objects.create_user(
             email=self.email,
             password=password,
         )
+
+        UserProfile.objects.create(user=user)
+
+        return user

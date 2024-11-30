@@ -5,7 +5,7 @@ DB_CONTAINER = db
 ENV_FILE := $(if $(filter production,$(ENV)),--env-file ./app/config/.env,)
 
 
-FIXTURES = fixtures/users.json /
+FIXTURES = fixtures/users.json \
 			fixtures/cities.json
 
 build:
