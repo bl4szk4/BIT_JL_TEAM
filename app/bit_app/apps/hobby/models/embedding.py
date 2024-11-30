@@ -10,7 +10,7 @@ class HobbyEmbedding(models.Model):
         on_delete=models.CASCADE,
         null=True,
         blank=True,
-        related_name="embeddings",
+        related_name="hobby_embeddings",
     )
     embedding = VectorField(
         dimensions=1536,

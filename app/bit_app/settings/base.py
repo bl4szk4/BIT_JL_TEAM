@@ -62,6 +62,7 @@ INSTALLED_APPS = [
     "rest_framework_simplejwt.token_blacklist",
     "dj_rest_auth",
     "phonenumber_field",
+    'pgvector.django',
     "ckeditor",
     "nested_admin",
     "django_object_actions",

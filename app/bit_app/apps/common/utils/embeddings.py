@@ -9,6 +9,7 @@ def generate_embedded_data(text: str) -> list[float]:
         openai_api_key=AzureEmbedding.KEY,
         azure_endpoint=AzureEmbedding.ENDPOINT,
         openai_api_version=AzureEmbedding.API_VERSION,
+        chunk_size=2048,
     )
 
     return azure_embedding.embed_query(text)

@@ -28,48 +28,48 @@ services:
       - ./app/config/.env
     restart: always
 
-  redis:
-    container_name: bit_redis
-    image: redis:7-alpine
-    command: >
-      /bin/sh -c "redis-server
-      --requirepass $$REDIS_PASSWORD
-      --maxmemory 256mb
-      --maxmemory-policy allkeys-lru"
-    env_file: ./app/config/.env
-    expose:
-      - 6379
-    restart: always
-
-  celery_worker_default: &default_celery_worker
-    container_name: bit_celery_worker
-    build:
-      context: ./  # Punkt budowania Dockerfile
-      dockerfile: deployment/django/Dockerfile
-      args:
-        ENV: development
-    env_file: ./app/config/.env
-    command: celery -A bit_app worker -l info --uid=nobody --gid=nogroup
-    environment:
-      - DJANGO_SETTINGS_MODULE=bit_app.settings.base
-    volumes:
-      - ./app:/backend/app
-    restart: always
-    depends_on:
-      - db
-      - redis
-
-  celery_beat:
-    <<: *default_celery_worker
-    container_name: bit_celery_beat
-    command: celery -A bit_app beat -l info --scheduler django_celery_beat.schedulers:DatabaseScheduler --uid=nobody --gid=nogroup
-    environment:
-      - DJANGO_SETTINGS_MODULE=bit_app.settings.base
-    depends_on:
-      - db
-      - redis
-      - celery_worker_default
-
+#  redis:
+#    container_name: bit_redis
+#    image: redis:7-alpine
+#    command: >
+#      /bin/sh -c "redis-server
+#      --requirepass $$REDIS_PASSWORD
+#      --maxmemory 256mb
+#      --maxmemory-policy allkeys-lru"
+#    env_file: ./app/config/.env
+#    expose:
+#      - 6379
+#    restart: always
+#
+#  celery_worker_default: &default_celery_worker
+#    container_name: bit_celery_worker
+#    build:
+#      context: ./  # Punkt budowania Dockerfile
+#      dockerfile: deployment/django/Dockerfile
+#      args:
+#        ENV: development
+#    env_file: ./app/config/.env
+#    command: celery -A bit_app worker -l info --uid=nobody --gid=nogroup
+#    environment:
+#      - DJANGO_SETTINGS_MODULE=bit_app.settings.base
+#    volumes:
+#      - ./app:/backend/app
+#    restart: always
+#    depends_on:
+#      - db
+#      - redis
+#
+#  celery_beat:
+#    <<: *default_celery_worker
+#    container_name: bit_celery_beat
+#    command: celery -A bit_app beat -l info --scheduler django_celery_beat.schedulers:DatabaseScheduler --uid=nobody --gid=nogroup
+#    environment:
+#      - DJANGO_SETTINGS_MODULE=bit_app.settings.base
+#    depends_on:
+#      - db
+#      - redis
+#      - celery_worker_default
+#
 
 volumes:
   postgres_data:
