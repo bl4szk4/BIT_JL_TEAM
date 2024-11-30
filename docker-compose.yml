@@ -1,0 +1,29 @@
+services:
+  db:
+    container_name: bit_db
+    image: postgres:14
+    env_file:
+      - ./app/config/.env
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  web:
+    container_name: bit_backend
+    build:
+      context: ./
+      dockerfile: deployment/Dockerfile
+    command: python -Wd /app/manage.py runserver 0.0.0.0:8000
+    environment:
+      - DJANGO_SETTINGS_MODULE=bit_app.settings
+    volumes:
+      - ./app:/app
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    env_file:
+      - ./app/config/.env
+    restart: always
+
+volumes:
+  postgres_data:
