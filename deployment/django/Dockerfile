@@ -2,16 +2,25 @@ FROM python:3.11.6-bookworm as build
 
 WORKDIR /app
 
-COPY ../app/requirements.txt /app/
+COPY ../../app/requirements.txt /app/
 
 RUN pip install --no-cache-dir -r requirements.txt
 
-COPY ../app /app/
+COPY ../../app /app/
 
 RUN apt-get update -q && apt-get install -yq \
-    gdal-bin gettext python3-pip \
-    python3-cffi python3-brotli libpango-1.0-0 tesseract-ocr && \
+    gdal-bin \
+    libgdal-dev \
+    proj-bin \
+    libproj-dev \
+    gettext \
+    python3-pip \
+    python3-cffi \
+    python3-brotli \
+    libpango-1.0-0 \
+    tesseract-ocr && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
+
 
 RUN pip install --no-cache-dir -r requirements.txt
 

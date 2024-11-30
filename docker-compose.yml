@@ -1,17 +1,20 @@
 services:
   db:
     container_name: bit_db
-    image: postgres:14
+    build:
+      context: ./
+      dockerfile: deployment/postgres/Dockerfile
     env_file:
       - ./app/config/.env
     volumes:
       - postgres_data:/var/lib/postgresql/data
-
+    ports:
+      - "5432:5432"
   web:
     container_name: bit_backend
     build:
       context: ./
-      dockerfile: deployment/Dockerfile
+      dockerfile: deployment/django/Dockerfile
     command: python -Wd /app/manage.py runserver 0.0.0.0:8000
     environment:
       - DJANGO_SETTINGS_MODULE=bit_app.settings

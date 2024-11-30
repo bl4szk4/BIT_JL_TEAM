@@ -50,12 +50,12 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "django.contrib.postgres",
-    "django.contrib.gis",
     "rest_framework",
     "django_filters",
     "drf_yasg",
     "debug_toolbar",
     "corsheaders",
+    'django.contrib.gis',
     "rest_framework.authtoken",
     "rest_framework_simplejwt",
     "rest_framework_simplejwt.token_blacklist",
@@ -67,6 +67,8 @@ INSTALLED_APPS = [
     "django_jsonform",
     "simple_history",
     "bit_app.apps.user",
+    "bit_app.apps.user_profile",
+    "bit_app.apps.common",
 ]
 
 MIDDLEWARE = [
@@ -108,7 +110,7 @@ WSGI_APPLICATION = "bit_app.wsgi.application"
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.postgresql",
+        "ENGINE": "django.contrib.gis.db.backends.postgis",
         "NAME": env("DJANGO_DB_NAME"),
         "USER": env("DJANGO_DB_USER"),
         "PASSWORD": env("DJANGO_DB_PASSWORD"),
