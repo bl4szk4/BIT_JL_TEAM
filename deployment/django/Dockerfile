@@ -3,6 +3,7 @@ FROM python:3.11.6-bookworm as build
 WORKDIR /app
 
 COPY ../../app/requirements.txt /app/
+
 RUN pip install --no-cache-dir -r requirements.txt
 
 COPY ../../app /app/
@@ -27,6 +28,6 @@ EXPOSE 8000
 
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
-ENV DJANGO_SETTINGS_MODULE=bit_app.settings
+ENV DJANGO_SETTINGS_MODULE=bit_app.settings.base
 
 CMD ["while !</dev/tcp/db/5432 do sleep 1; done;"]

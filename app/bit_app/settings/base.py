@@ -43,6 +43,7 @@ ENV = env("ENV")
 
 INSTALLED_APPS = [
     "django.contrib.admin",
+    "django_celery_beat",
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "djangorestframework_camel_case",
@@ -55,7 +56,7 @@ INSTALLED_APPS = [
     "drf_yasg",
     "debug_toolbar",
     "corsheaders",
-    # 'django.contrib.gis',
+    'django.contrib.gis',
     "rest_framework.authtoken",
     "rest_framework_simplejwt",
     "rest_framework_simplejwt.token_blacklist",
@@ -83,6 +84,27 @@ MIDDLEWARE = [
     "simple_history.middleware.HistoryRequestMiddleware",
     "bit_app.settings.middlewares.DeprecatedJWTTokenMiddleware",
 ]
+
+REST_FRAMEWORK = {
+    "DEFAULT_PERMISSION_CLASSES": ["rest_framework.permissions.IsAuthenticated"],
+    "DEFAULT_AUTHENTICATION_CLASSES": [
+        "dj_rest_auth.jwt_auth.JWTCookieAuthentication",
+    ],
+    "DEFAULT_RENDERER_CLASSES": [
+        "djangorestframework_camel_case.render.CamelCaseJSONRenderer",
+        "rest_framework.renderers.BrowsableAPIRenderer",
+    ],
+    "DEFAULT_PARSER_CLASSES": [
+        "djangorestframework_camel_case.parser.CamelCaseJSONParser",
+        "djangorestframework_camel_case.parser.CamelCaseMultiPartParser",
+        "rest_framework.parsers.MultiPartParser",
+        "rest_framework.parsers.FormParser",
+    ],
+    "TEST_REQUEST_DEFAULT_FORMAT": "json",
+    "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.LimitOffsetPagination",
+    "PAGE_SIZE": 10,
+    "DEFAULT_FILTER_BACKENDS": ("django_filters.rest_framework.DjangoFilterBackend",),
+}
 
 ROOT_URLCONF = "bit_app.urls"
 
@@ -196,3 +218,13 @@ class AzureOpenAI:
     ENDPOINT = os.environ.get("AZURE_OPENAI_ENDPOINT")
     KEY = os.environ.get("AZURE_OPENAI_KEY")
     API_VERSION = "2024-05-01-preview"
+
+class AzureEmbedding:
+    ENDPOINT = os.environ.get("AZURE_EMBEDDING_ENDPOINT")
+    KEY = os.environ.get("AZURE_EMBEDDING_KEY")
+
+CELERY_BROKER_URL = os.environ.get("CELERY_BROKER", "redis://127.0.0.1:6379/0")
+CELERY_RESULT_BACKEND = os.environ.get("CELERY_BACKEND", "redis://127.0.0.1:6379/0")
+
+class Redis:
+    REDIS_PASSWORD = env("REDIS_PASSWORD")

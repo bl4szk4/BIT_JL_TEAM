@@ -26,6 +26,7 @@ from bit_app.swagger import swagger_url_patterns
 
 urlpatterns = [
     path("auth/", include("bit_app.apps.user.urls")),
+    path("", include("bit_app.apps.user_profile.urls")),
     path("admin/", admin.site.urls),
 ]
 
