@@ -18,7 +18,6 @@ class ProfileCharacterSerializer(serializers.Serializer):
     )
 
 
-
 class UserProfileSerializer(serializers.ModelSerializer):
     location = serializers.CharField(allow_null=True, required=False)
     character = ProfileCharacterSerializer(required=False, allow_null=True)

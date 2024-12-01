@@ -1,6 +1,7 @@
 # Register your models here.
 from django.contrib import admin
-from bit_app.apps.user_profile.models import UserProfile, Quiz, Question, ProfileEmbedding
+
+from bit_app.apps.user_profile.models import ProfileEmbedding, Question, Quiz, UserProfile
 
 
 @admin.register(UserProfile)
@@ -29,6 +30,7 @@ class QuestionAdmin(admin.ModelAdmin):
         "name",
     )
     autocomplete_fields = ("quiz",)
+
 
 @admin.register(ProfileEmbedding)
 class ProfileEmbeddingAdmin(admin.ModelAdmin):

@@ -1,4 +1,4 @@
-from django.db.models import Case, When
+from django.db.models import Case, F, Sum, When
 from pgvector.django import CosineDistance
 
 from bit_app.apps.hobby.consts import SEMANTIC_SEARCH_THRESHOLD
@@ -11,33 +11,33 @@ class HobbyMatchingService:
         self.profile = profile
 
     def get_best_matching_hobbies(self):
-        print(self.profile.id)
-        profile_embedding_instance = self.profile.embeddings.first()
-        if not profile_embedding_instance:
+        profile_embeddings = list(self.profile.embeddings.all().values_list("embedding", flat=True))
+        if not profile_embeddings:
             return Hobby.objects.none()
 
-        profile_embedding = profile_embedding_instance.embedding
-        rejected_hobbies = self.profile.rejected_hobbies
-        hobby_embeddings = HobbyEmbedding.objects.select_related("hobby").exclude(
-            hobby_id__in=rejected_hobbies,
-        )
+        hobby_embeddings = HobbyEmbedding.objects.select_related("hobby").all()
 
-        best_hobbies = hobby_embeddings.annotate(
-            hobby_distance=CosineDistance("embedding", profile_embedding),
-        ).filter(
-            hobby_distance__lte=SEMANTIC_SEARCH_THRESHOLD,
-        )
+        for embedding in profile_embeddings:
+            hobby_embeddings = hobby_embeddings.annotate(
+                hobby_distance=CosineDistance("embedding", embedding)
+            ).filter(
+                hobby_distance__lte=SEMANTIC_SEARCH_THRESHOLD,
+            )
 
-        if not best_hobbies.exists():
+        if not hobby_embeddings.exists():
             return Hobby.objects.none()
 
-        best_hobbies = best_hobbies.order_by("hobby_distance")
+        hobby_distances = (
+            hobby_embeddings.values("hobby")
+            .annotate(total_distance=Sum("hobby_distance"))
+            .order_by("total_distance")
+        )
 
-        best_results_ids = best_hobbies.values_list("hobby__id", flat=True)
+        best_results_ids = [entry["hobby"] for entry in hobby_distances]
         preserved_order = Case(
             *[
-                When(id=result_id, then=position)
-                for position, result_id in enumerate(best_results_ids)
+                When(id=hobby_id, then=position)
+                for position, hobby_id in enumerate(best_results_ids)
             ]
         )
 

@@ -16,7 +16,7 @@ class UserProfile(models.Model):
     age = models.PositiveIntegerField(blank=True, null=True)
     location = models.ForeignKey(Location, on_delete=models.SET_NULL, blank=True, null=True)
 
-    summary = models.TextField(blank=True, null=True)
+    summary = models.JSONField(blank=True, null=True)
     character = models.JSONField(blank=True, null=True, default=dict)
 
     accepted_hobbies = models.JSONField(default=list, blank=True, null=True)

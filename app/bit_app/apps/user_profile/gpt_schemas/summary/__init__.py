@@ -7,15 +7,20 @@ You are a person summarizer. For given list of questions with answers write a su
 
 USER_PROMPT = """
 You are given a list of questions that were asked to the user with their answers. Provide me a characteristic of that 
-user. Characteristic should be short and based on those questions with answers.
+user. Characteristic should be short and based on those questions with answers. Provide me a list of short 
+sentences describing the person.
 """
 
 SCHEMA = {
     "type": "object",
     "properties": {
         "summary": {
-            "type": "string",
-            "summary": "Summary of the offer",
+            "type": "array",
+            "items": {
+                "type": "string",
+                "description": "An individual item in the summary list",
+            },
+            "description": "A list of summary strings",
         }
     },
     "required": ["summary"],
