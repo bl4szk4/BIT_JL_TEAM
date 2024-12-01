@@ -65,8 +65,7 @@ class ProfileViewSet(viewsets.GenericViewSet):
         service.generate_person_summary()
         service.generate_embedding()
         character = service.generate_person_character()
-        serializer = ProfileCharacterSerializer(character)
-        return Response(status=status.HTTP_200_OK, data=serializer.data)
+        return Response(status=status.HTTP_200_OK, data=character)
 
     @swagger_auto_schema(responses={status.HTTP_200_OK: ""}, request_body=HobbyUpdateSerializer)
     @action(methods=["POST"], detail=False, url_path="update-hobbies-profiles")

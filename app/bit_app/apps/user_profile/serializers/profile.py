@@ -17,15 +17,9 @@ class ProfileCharacterSerializer(serializers.Serializer):
     Social_Connectedness = serializers.IntegerField(required=False)
 
 
-
 class UserProfileSerializer(serializers.ModelSerializer):
     location = serializers.CharField(allow_null=True, required=False)
-    character = serializers.DictField(
-        child=serializers.IntegerField(),
-        required=False,
-        allow_null=True,
-        help_text="A dictionary of traits with their integer values",
-    )
+    character = serializers.JSONField(required=False)
 
     class Meta:
         model = UserProfile
