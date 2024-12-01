@@ -5,6 +5,7 @@ from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.request import Request
 from rest_framework.response import Response
 
+from bit_app.apps.hobby.models import Hobby
 from bit_app.apps.user_profile.models import UserProfile
 from bit_app.apps.user_profile.serializers import (
     HobbyUpdateSerializer,
@@ -12,6 +13,7 @@ from bit_app.apps.user_profile.serializers import (
     QuizSerializer,
     UserProfileSerializer,
 )
+from bit_app.apps.hobby.serializers import HobbySerializer
 from bit_app.apps.user_profile.services import QuizService, UserSummaryService
 
 
@@ -95,3 +97,14 @@ class ProfileViewSet(viewsets.GenericViewSet):
             },
             status=status.HTTP_200_OK,
         )
+
+    @action(methods=["GET"], detail=False, url_path="get-my-hobbies")
+    def get_my_hobbies(self, request: Request) -> Response:
+        profile = self.get_object()
+        try:
+            hobbies = Hobby.objects.filter(id__in=profile.accepted_hobbies)
+            serializer = HobbySerializer(hobbies, many=True)
+        except Exception:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
+        return Response(serializer.data, status=status.HTTP_200_OK)

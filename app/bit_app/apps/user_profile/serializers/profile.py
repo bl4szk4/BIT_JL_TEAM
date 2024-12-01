@@ -4,23 +4,28 @@ from bit_app.apps.common.models import Location
 from bit_app.apps.user_profile.models import UserProfile
 
 
-class TraitSerializer(serializers.Serializer):
-    character = serializers.DictField(
-        child=serializers.IntegerField(),
-        help_text="A dictionary of traits with their integer values",
-    )
-
-
 class ProfileCharacterSerializer(serializers.Serializer):
-    character = serializers.DictField(
-        child=serializers.IntegerField(),
-        help_text="A dictionary of traits with their integer values",
-    )
+    Openness = serializers.IntegerField(required=False)
+    Curiosity = serializers.IntegerField(required=False)
+    Neuroticism = serializers.IntegerField(required=False)
+    Extraversion = serializers.IntegerField(required=False)
+    Perseverance = serializers.IntegerField(required=False)
+    Risk_Tolerance = serializers.IntegerField(required=False)
+    Adventurousness = serializers.IntegerField(required=False)
+    Conscientiousness = serializers.IntegerField(required=False)
+    Emotional_Resonance = serializers.IntegerField(required=False)
+    Social_Connectedness = serializers.IntegerField(required=False)
+
 
 
 class UserProfileSerializer(serializers.ModelSerializer):
     location = serializers.CharField(allow_null=True, required=False)
-    character = ProfileCharacterSerializer(required=False, allow_null=True)
+    character = serializers.DictField(
+        child=serializers.IntegerField(),
+        required=False,
+        allow_null=True,
+        help_text="A dictionary of traits with their integer values",
+    )
 
     class Meta:
         model = UserProfile

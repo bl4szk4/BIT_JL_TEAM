@@ -1,4 +1,4 @@
-from rest_framework import mixins, viewsets
+from rest_framework import mixins, viewsets, status
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.request import Request
@@ -11,7 +11,7 @@ from bit_app.apps.user_profile.models import UserProfile
 
 
 class HobbyMatchingPagination(PageNumberPagination):
-    page_size = 10
+    page_size = 20
     page_size_query_param = "page_size"
     max_page_size = 100
 
@@ -23,7 +23,10 @@ class HobbyMatchingViewSet(viewsets.GenericViewSet, mixins.RetrieveModelMixin):
     pagination_class = HobbyMatchingPagination
 
     def list(self, request: Request) -> Response:
-        profile = UserProfile.objects.prefetch_related("embeddings").get(user=self.request.user)
+        try:
+            profile = UserProfile.objects.prefetch_related("embeddings").get(user=self.request.user)
+        except Exception:
+            return Response(status=status.HTTP_404_NOT_FOUND)
 
         hobbies_matched = HobbyMatchingService(profile).get_best_matching_hobbies()
         page = self.paginate_queryset(hobbies_matched)
