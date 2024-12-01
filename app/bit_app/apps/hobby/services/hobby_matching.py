@@ -15,7 +15,7 @@ class HobbyMatchingService:
         if not profile_embeddings:
             return Hobby.objects.none()
 
-        hobby_embeddings = HobbyEmbedding.objects.select_related("hobby").all()
+        hobby_embeddings = HobbyEmbedding.objects.select_related("hobby").exclude(hobby__id__in=self.profile.rejected_hobbies).exclude(hobby__id__in=self.profile.accepted_hobbies)
 
         for embedding in profile_embeddings:
             hobby_embeddings = hobby_embeddings.annotate(
